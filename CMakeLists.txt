@@ -27,6 +27,13 @@ if(ANDROID)
     endforeach()
 endif()
 
+if(NINTENDO_SWITCH)
+        set(CMAKE_TOOLCHAIN_FILE "${DEVKITPRO}/cmake/Switch.cmake" CACHE PATH "toolchain file")
+        add_compile_definitions(__SWITCH__)
+        add_compile_definitions(SDL_PLATFORM_SWITCH)
+        add_compile_definitions(SDL_VIDEO_DRIVER_SWITCH)
+endif()
+
 set(BUILD_SHARED_LIBS OFF)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

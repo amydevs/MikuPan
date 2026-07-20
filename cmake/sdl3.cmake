@@ -1,10 +1,19 @@
 include(FetchContent)
 
-FetchContent_Declare(
+if(NINTENDO_SWITCH)
+    FetchContent_Declare(
+        sdl3
+        GIT_REPOSITORY https://github.com/SnepOMatic/SDL3-Switch.git
+        GIT_TAG switch-sdl-3.2.14
+    )
+else()
+    FetchContent_Declare(
         sdl3
         GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
         GIT_TAG release-3.4.12
-)
+    )
+endif()
+
 if(ANDROID)
     set(SDL_STATIC OFF)
     set(SDL_SHARED ON)
