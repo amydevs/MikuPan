@@ -515,3 +515,4 @@ if(NOT ANDROID)
 endif()
 
 include(mikupan_android)
+include(mikupan_switch)
