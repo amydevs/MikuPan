@@ -164,28 +164,28 @@ elseif(NINTENDO_SWITCH)
 
     set(FFMPEG_ROOT "$ENV{DEVKITPRO}/portlibs/switch")
 
-    add_library(avcodec SHARED IMPORTED)
+    add_library(avcodec STATIC IMPORTED)
     set_target_properties(avcodec PROPERTIES
             IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavcodec.a"
             INTERFACE_INCLUDE_DIRECTORIES "${FFMPEG_ROOT}/include"
     )
 
-    add_library(avformat SHARED IMPORTED)
+    add_library(avformat STATIC IMPORTED)
     set_target_properties(avformat PROPERTIES
             IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavformat.a"
     )
 
-    add_library(avutil SHARED IMPORTED)
+    add_library(avutil STATIC IMPORTED)
     set_target_properties(avutil PROPERTIES
             IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavutil.a"
     )
 
-    add_library(swscale SHARED IMPORTED)
+    add_library(swscale STATIC IMPORTED)
     set_target_properties(swscale PROPERTIES
             IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libswscale.a"
     )
 
-    add_library(swresample SHARED IMPORTED)
+    add_library(swresample STATIC IMPORTED)
     set_target_properties(swresample PROPERTIES
             IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libswresample.a"
     )
