@@ -6,7 +6,7 @@ option(MIKUPAN_SWITCH_NRO
     "Build Nintendo Switch .nro package from the MikuPan ELF output."
     ON)
 
-if(MIKUPAN_SWITCH_NRO)
+if(NOT MIKUPAN_SWITCH_NRO)
     return()
 endif()
 
@@ -17,10 +17,10 @@ endif()
 
 find_program(NACPTOOL_BIN
     NAMES nacptool)
-find_program(ELF2NRO
+find_program(ELF2NRO_BIN
     NAMES elf2nro)
 
-foreach(tool NACPTOOL_BIN ELF2NRO)
+foreach(tool NACPTOOL_BIN ELF2NRO_BIN)
     if(NOT ${tool} OR NOT EXISTS "${${tool}}")
         message(FATAL_ERROR "Required Switch packaging tool not found: ${tool}")
     endif()
@@ -32,7 +32,7 @@ set(MIKUPAN_SWITCH_NACP
 
 add_custom_command(
     OUTPUT "${MIKUPAN_SWITCH_NACP}"
-    COMMAND "${NACPTOOL}"
+    COMMAND "${NACPTOOL_BIN}"
     --create
     "MikuPan"
     "Mikompilation"
@@ -46,7 +46,7 @@ add_custom_target(MikuPan-nacp
 
 add_custom_command(
     OUTPUT "${CMAKE_BINARY_DIR}/MikuPan.nro"
-    COMMAND "${ELF2NRO}"
+    COMMAND "${ELF2NRO_BIN}"
         "$<TARGET_FILE:MikuPan>"
         "${CMAKE_BINARY_DIR}/MikuPan.nro"
         "--nacp=${MIKUPAN_SWITCH_NACP}"
@@ -54,4 +54,5 @@ add_custom_command(
     VERBATIM
 )
 
-
+add_custom_target(MikuPan-nro
+        DEPENDS "${CMAKE_BINARY_DIR}/MikuPan.nro")
