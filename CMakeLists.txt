@@ -31,7 +31,6 @@ if(NINTENDO_SWITCH)
         add_compile_definitions(__SWITCH__)
         add_compile_definitions(SDL_PLATFORM_SWITCH)
         add_compile_definitions(SDL_VIDEO_DRIVER_SWITCH)
-        add_compile_options(-include switch.h)
 endif()
 
 set(BUILD_SHARED_LIBS OFF)
@@ -499,10 +498,6 @@ endif()
 
 if(ANDROID)
     target_link_libraries(MikuPan PRIVATE log)
-endif()
-
-if(NINTENDO_SWITCH)
-    target_link_libraries(MikuPan PRIVATE nx)
 endif()
 
 if(NOT ANDROID)
