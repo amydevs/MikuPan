@@ -156,6 +156,39 @@ if(ANDROID)
 
         set(MIKUPAN_ANDROID_SHARED_LIB_TARGETS ${MIKUPAN_FFMPEG_LIBS})
     endif()
+elseif(NINTENDO_SWITCH)
+    if(NOT DEFINED ENV{DEVKITPRO} OR "$ENV{DEVKITPRO}" STREQUAL "")
+        message(FATAL_ERROR
+                "DEVKITPRO is not set. It is required to locate Nintendo Switch FFmpeg portlibs.")
+    endif()
+
+    set(FFMPEG_ROOT "$ENV{DEVKITPRO}/portlibs/switch")
+
+    add_library(avcodec SHARED IMPORTED)
+    set_target_properties(avcodec PROPERTIES
+            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavcodec.a"
+            INTERFACE_INCLUDE_DIRECTORIES "${FFMPEG_ROOT}/include"
+    )
+
+    add_library(avformat SHARED IMPORTED)
+    set_target_properties(avformat PROPERTIES
+            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavformat.a"
+    )
+
+    add_library(avutil SHARED IMPORTED)
+    set_target_properties(avutil PROPERTIES
+            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavutil.a"
+    )
+
+    add_library(swscale SHARED IMPORTED)
+    set_target_properties(swscale PROPERTIES
+            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libswscale.a"
+    )
+
+    add_library(swresample SHARED IMPORTED)
+    set_target_properties(swresample PROPERTIES
+            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libswresample.a"
+    )
 elseif(WIN32)
     set(FFMPEG_ROOT "${CMAKE_SOURCE_DIR}/extern/ffmpeg")
 
