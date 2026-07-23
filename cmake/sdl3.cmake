@@ -4,7 +4,7 @@ if(NINTENDO_SWITCH)
     FetchContent_Declare(
         sdl3
         GIT_REPOSITORY https://github.com/SnepOMatic/SDL3-Switch.git
-        GIT_TAG switch-sdl-3.2.14
+        GIT_TAG develop/switch-sdl-3.4.0
     )
 else()
     FetchContent_Declare(
