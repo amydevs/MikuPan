@@ -28,7 +28,6 @@ if(ANDROID)
 endif()
 
 if(NINTENDO_SWITCH)
-        set(CMAKE_TOOLCHAIN_FILE "${DEVKITPRO}/cmake/Switch.cmake" CACHE PATH "toolchain file")
         add_compile_definitions(__SWITCH__)
         add_compile_definitions(SDL_PLATFORM_SWITCH)
         add_compile_definitions(SDL_VIDEO_DRIVER_SWITCH)
@@ -499,6 +498,11 @@ endif()
 
 if(ANDROID)
     target_link_libraries(MikuPan PRIVATE log)
+endif()
+
+if(NINTENDO_SWITCH)
+    target_link_libraries(MikuPan PRIVATE nx)
+    add_compile_options(-include switch.h)
 endif()
 
 if(NOT ANDROID)
