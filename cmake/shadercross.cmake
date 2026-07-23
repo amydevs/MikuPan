@@ -36,7 +36,7 @@
 # ---------------------------------------------------------------------------
 
 set(MIKUPAN_COMPILE_SHADERS_DEFAULT ON)
-if(ANDROID)
+if(ANDROID OR NINTENDO_SWITCH)
     set(MIKUPAN_COMPILE_SHADERS_DEFAULT OFF)
 endif()
 
