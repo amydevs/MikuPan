@@ -3,6 +3,7 @@
 #include "mikupan/io/mikupan_file_c.h"
 
 #include <SDL3/SDL.h>
+#include <ctime>
 #include <stdio.h>
 #include <string.h>
 
@@ -116,28 +117,28 @@ int sceCdMmode(int media)
 
 int sceCdReadClock(sceCdCLOCK* rtc)
 {
-    SDL_Time now;
-    SDL_DateTime dt;
-    int year;
+    std::time_t t = std::time(nullptr);
+    std::tm tm;
 
-    if (!SDL_GetCurrentTime(&now) || !SDL_TimeToDateTime(now, &dt, true)) {
-        rtc->stat = 0x80;
-        return 0;
-    }
+#if defined(_WIN32)
+    localtime_s(&tm, &t);
+#else
+    localtime_r(&t, &tm);
+#endif
 
-    year = dt.year - 2000;
+    int year = tm.tm_year - 100;
     if (year < 0)
         year = 0;
     else if (year > 99)
         year = 99;
 
     rtc->stat = 0;
-    rtc->second = DecToBcd((u_char)dt.second);
-    rtc->minute = DecToBcd((u_char)dt.minute);
-    rtc->hour = DecToBcd((u_char)dt.hour);
+    rtc->second = DecToBcd((u_char)tm.tm_sec);
+    rtc->minute = DecToBcd((u_char)tm.tm_min);
+    rtc->hour = DecToBcd((u_char)tm.tm_hour);
     rtc->pad = 0;
-    rtc->day = DecToBcd((u_char)dt.day);
-    rtc->month = DecToBcd((u_char)dt.month);
+    rtc->day = DecToBcd((u_char)tm.tm_mday);
+    rtc->month = DecToBcd((u_char)(tm.tm_mon + 1));
     rtc->year = DecToBcd((u_char)year);
 
     return 1;
