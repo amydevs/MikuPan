@@ -22,7 +22,17 @@
         };
       in
       {
-        devShells.default = pkgs.mkShell.override { stdenv = pkgs.devkitNix.stdenvA64; } { };
+        devShells.default = pkgs.mkShell.override { stdenv = pkgs.devkitNix.stdenvA64; } {
+          buildInputs = [
+            pkgs.pkg-config
+          ];
+          shellHook = ''
+            export SYSROOT="${pkgs.devkitNix.devkitA64}"
+            export PKG_CONFIG="${pkgs.pkg-config}/bin/pkg-config"
+            export PKG_CONFIG_LIBDIR="$DEVKITPRO/portlibs/switch/lib/pkgconfig"
+            export PKG_CONFIG_SYSROOT_DIR="$SYSROOT"
+          '';
+        };
         packages.default = pkgs.devkitNix.stdenvA64.mkDerivation {
           name = "devkitA64-example";
           src = ./.;
