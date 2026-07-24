@@ -162,33 +162,30 @@ elseif(NINTENDO_SWITCH)
                 "DEVKITPRO is not set. It is required to locate Nintendo Switch FFmpeg portlibs.")
     endif()
 
-    set(FFMPEG_ROOT "$ENV{DEVKITPRO}/portlibs/switch")
+    find_package(PkgConfig REQUIRED)
+    message(STATUS "PKG_CONFIG_EXECUTABLE: ${PKG_CONFIG_EXECUTABLE}")
 
-    add_library(avcodec STATIC IMPORTED)
-    set_target_properties(avcodec PROPERTIES
-            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavcodec.a"
-            INTERFACE_INCLUDE_DIRECTORIES "${FFMPEG_ROOT}/include"
-    )
+    pkg_check_modules(AVCODEC REQUIRED IMPORTED_TARGET libavcodec)
+    pkg_check_modules(AVFORMAT REQUIRED IMPORTED_TARGET libavformat)
+    pkg_check_modules(AVUTIL REQUIRED IMPORTED_TARGET libavutil)
+    pkg_check_modules(SWSCALE REQUIRED IMPORTED_TARGET libswscale)
+    pkg_check_modules(SWRESAMPLE REQUIRED IMPORTED_TARGET libswresample)
 
-    add_library(avformat STATIC IMPORTED)
-    set_target_properties(avformat PROPERTIES
-            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavformat.a"
-    )
+    # Create imported targets
+    add_library(avcodec INTERFACE IMPORTED)
+    target_link_libraries(avcodec INTERFACE PkgConfig::AVCODEC)
 
-    add_library(avutil STATIC IMPORTED)
-    set_target_properties(avutil PROPERTIES
-            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libavutil.a"
-    )
+    add_library(avformat INTERFACE IMPORTED)
+    target_link_libraries(avformat INTERFACE PkgConfig::AVFORMAT)
 
-    add_library(swscale STATIC IMPORTED)
-    set_target_properties(swscale PROPERTIES
-            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libswscale.a"
-    )
+    add_library(avutil INTERFACE IMPORTED)
+    target_link_libraries(avutil INTERFACE PkgConfig::AVUTIL)
 
-    add_library(swresample STATIC IMPORTED)
-    set_target_properties(swresample PROPERTIES
-            IMPORTED_LOCATION "${FFMPEG_ROOT}/lib/libswresample.a"
-    )
+    add_library(swscale INTERFACE IMPORTED)
+    target_link_libraries(swscale INTERFACE PkgConfig::SWSCALE)
+
+    add_library(swresample INTERFACE IMPORTED)
+    target_link_libraries(swresample INTERFACE PkgConfig::SWRESAMPLE)
 elseif(WIN32)
     set(FFMPEG_ROOT "${CMAKE_SOURCE_DIR}/extern/ffmpeg")
 
