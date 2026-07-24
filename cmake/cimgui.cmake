@@ -36,8 +36,6 @@ target_include_directories(cimgui PUBLIC
 
 if(NINTENDO_SWITCH)
     target_compile_definitions(cimgui PUBLIC
-        IMGUI_DISABLE_OBSOLETE_KEYIO
-        IMGUI_DISABLE_OBSOLETE_FUNCTIONS
         IMGUI_DISABLE_DEFAULT_SHELL_FUNCTIONS
     )
 endif()
