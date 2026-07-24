@@ -16,6 +16,11 @@ add_library(implot STATIC
         ${implot_src_SOURCE_DIR}/implot_items.cpp
 )
 
+if(NINTENDO_SWITCH)
+    target_compile_options(implot PRIVATE
+            -include "${CMAKE_CURRENT_LIST_DIR}/implot_switch_compat.h")
+endif()
+
 target_include_directories(implot PUBLIC
         ${implot_src_SOURCE_DIR}
 )
