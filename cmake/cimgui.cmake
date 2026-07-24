@@ -34,4 +34,12 @@ target_include_directories(cimgui PUBLIC
         ${cimgui_src_SOURCE_DIR}/imgui/backends
 )
 
+if(NINTENDO_SWITCH)
+    target_compile_definitions(cimgui PUBLIC
+        IMGUI_DISABLE_OBSOLETE_KEYIO
+        IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+        IMGUI_DISABLE_DEFAULT_SHELL_FUNCTIONS
+    )
+endif()
+
 target_link_libraries(cimgui PUBLIC SDL3::SDL3)
