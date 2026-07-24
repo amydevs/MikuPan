@@ -29,4 +29,12 @@ target_sources(
 
 )
 
+if(NINTENDO_SWITCH)
+    target_compile_definitions(imgui PUBLIC
+        IMGUI_DISABLE_OBSOLETE_KEYIO
+        IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+        IMGUI_DISABLE_DEFAULT_SHELL_FUNCTIONS
+    )
+endif()
+
 target_link_libraries(imgui PUBLIC SDL3::SDL3)
