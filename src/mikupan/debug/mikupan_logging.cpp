@@ -1,6 +1,7 @@
 #include "mikupan_logging.h"
 
 #include "spdlog/cfg/env.h"
+#include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
@@ -78,6 +79,9 @@ std::shared_ptr<spdlog::logger> CreateLogger()
 #ifdef __ANDROID__
     sinks.emplace_back(std::make_shared<spdlog::sinks::android_sink_mt>(
         kLoggerName));
+#elif defined(__SWITCH__)
+    sinks.emplace_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>(
+        "MikuPan.log", true));
 #else
     sinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
 #endif
