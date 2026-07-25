@@ -157,13 +157,7 @@ if(ANDROID)
         set(MIKUPAN_ANDROID_SHARED_LIB_TARGETS ${MIKUPAN_FFMPEG_LIBS})
     endif()
 elseif(NINTENDO_SWITCH)
-    if(NOT DEFINED ENV{DEVKITPRO} OR "$ENV{DEVKITPRO}" STREQUAL "")
-        message(FATAL_ERROR
-                "DEVKITPRO is not set. It is required to locate Nintendo Switch FFmpeg portlibs.")
-    endif()
-
     find_package(PkgConfig REQUIRED)
-    message(STATUS "PKG_CONFIG_EXECUTABLE: ${PKG_CONFIG_EXECUTABLE}")
 
     pkg_check_modules(AVCODEC REQUIRED IMPORTED_TARGET libavcodec)
     pkg_check_modules(AVFORMAT REQUIRED IMPORTED_TARGET libavformat)
