@@ -144,7 +144,7 @@ static int MikuPan_RendererIsSuperSampling(SDL_Window* window)
     int window_width = 0;
     int window_height = 0;
 
-#ifndef __ANDROID__
+#ifndef __ANDROID__ || __SWITCH__
     if (window != NULL)
     {
         SDL_GetWindowSizeInPixels(window, &window_width, &window_height);
@@ -245,20 +245,20 @@ SDL_AppResult MikuPan_Init()
     }
 
     int config_window_flags =
-#ifdef __ANDROID__
+#ifdef __ANDROID__ || __SWITCH__
         SDL_WINDOW_FULLSCREEN;
 #else
         SDL_WINDOW_RESIZABLE;
 #endif
 
     int startup_window_mode = mikupan_configuration.renderer.window_mode;
-#ifndef __ANDROID__
+#ifndef __ANDROID__ || __SWITCH__
     if (startup_window_mode == MIKUPAN_WINDOW_FULLSCREEN)
     {
         startup_window_mode = MIKUPAN_WINDOW_BORDERLESS;
     }
 #endif
-#ifdef __ANDROID__
+#ifdef __ANDROID__ || __SWITCH__
     startup_window_mode = MIKUPAN_WINDOW_FULLSCREEN;
 #endif
 
@@ -287,7 +287,7 @@ SDL_AppResult MikuPan_Init()
         return SDL_APP_FAILURE;
     }
 
-#ifndef __ANDROID__
+#ifndef __ANDROID__ || __SWITCH__
     MikuPan_ApplyWindowMode(startup_window_mode);
 #endif
 
@@ -298,7 +298,7 @@ SDL_AppResult MikuPan_Init()
         mikupan_configuration.renderer.window.height = mikupan_render.height;
     }
 
-#ifndef __ANDROID__
+#ifndef __ANDROID__ || __SWITCH__
     char icon_path[1024];
     SDL_Surface* iconSurface = NULL;
     if (MikuPan_ResolveBasePath("resources/mikupan.png",
@@ -340,7 +340,7 @@ SDL_AppResult MikuPan_Init()
         mikupan_configuration.renderer.msaa_index = desired_msaa;
     }
 
-#ifdef __ANDROID__
+#ifdef __ANDROID__ || __SWITCH__
     desired_msaa = 0;
     mikupan_configuration.renderer.msaa_index = desired_msaa;
 #endif
@@ -1511,7 +1511,7 @@ static void MikuPan_CenterWindowOnDisplay(SDL_Window* window, int width, int hei
 
 static void MikuPan_ApplyWindowMode(int mode)
 {
-#ifndef __ANDROID__
+#ifndef __ANDROID__ || __SWITCH__
     if (mode == MIKUPAN_WINDOW_FULLSCREEN)
     {
         mode = MIKUPAN_WINDOW_BORDERLESS;
