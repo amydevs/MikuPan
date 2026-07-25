@@ -22,7 +22,11 @@
         };
       in
       {
-        devShells.default = pkgs.mkShell.override { stdenv = pkgs.devkitNix.stdenvA64; } {};
+        devShells.default = pkgs.mkShell.override { stdenv = pkgs.devkitNix.stdenvA64; } {
+          buildInputs = [
+            pkgs.nstool
+          ];
+        };
         packages.default = pkgs.devkitNix.stdenvA64.mkDerivation {
           name = "devkitA64-example";
           src = ./.;
