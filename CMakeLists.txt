@@ -41,6 +41,7 @@ list(PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/MikuPan)
 
 include(sdl3)
+include(sdl_image)
 include(rmlui)
 include(cimgui)
 include(implot)
@@ -481,6 +482,7 @@ target_link_libraries(MikuPan PRIVATE
         cimgui
         implot
         SDL3::SDL3
+        SDL3_image::SDL3_image
         spdlog::spdlog
         cglm
         avcodec

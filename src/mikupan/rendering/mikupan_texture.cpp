@@ -8,6 +8,7 @@
 #include "mikupan_gpu.h"
 #include "mikupan_profiler.h"
 #include "mikupan_shader.h"
+#include "SDL3_image/SDL_image.h"
 #include <stdlib.h>
 #include <string>
 #include <format>
@@ -297,7 +298,7 @@ void MikuPan_SetupFntTexture()
 
             fnt_texture[i] = MikuPan_CreateGLTexture((sceGsTex0*) &fntdat[i].tex0);
 
-            SDL_Surface* surface = SDL_LoadPNG(texture_path.c_str());
+            SDL_Surface* surface = IMG_Load(texture_path.c_str());
 
             fnt_texture[i]->id = MikuPan_GPUCreateTextureFromSurface(surface);
 

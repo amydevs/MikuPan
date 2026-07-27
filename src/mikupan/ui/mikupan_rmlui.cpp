@@ -25,6 +25,7 @@
 #include "mikupan/rendering/mikupan_gpu.h"
 
 #include "SDL3/SDL.h"
+#include "SDL3_image/SDL_image.h"
 #include "RmlUi/Core.h"
 #include "RmlUi/Core/Input.h"
 #include "RmlUi/Core/SystemInterface.h"
@@ -1188,7 +1189,7 @@ private:
             normalized.erase(0, 1);
         }
 
-        SDL_Surface* surface = SDL_LoadPNG(normalized.c_str());
+        SDL_Surface* surface = IMG_Load(normalized.c_str());
         if (surface != nullptr)
         {
             return surface;
@@ -1208,7 +1209,7 @@ private:
                 continue;
             }
 
-            surface = SDL_LoadPNG(path);
+            surface = IMG_Load(path);
             if (surface != nullptr)
             {
                 return surface;

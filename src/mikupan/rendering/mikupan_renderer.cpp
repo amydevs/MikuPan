@@ -3,6 +3,7 @@
 #include "SDL3/SDL_hints.h"
 #include "SDL3/SDL_init.h"
 #include "SDL3/SDL_timer.h"
+#include "SDL3_image/SDL_image.h"
 #include "cglm/cglm.h"
 #include "graphics/graph2d/message.h"
 #include "graphics/graph3d/sgsu.h"
@@ -305,7 +306,7 @@ SDL_AppResult MikuPan_Init()
                                 icon_path,
                                 sizeof(icon_path)))
     {
-        iconSurface = SDL_LoadPNG(icon_path);
+        iconSurface = IMG_Load(icon_path);
     }
 
     if (iconSurface == NULL)
